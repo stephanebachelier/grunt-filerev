@@ -9,7 +9,8 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('filerev', 'File revisioning based on content hashing', function () {
     var options = this.options({
       algorithm: 'md5',
-      length: 8
+      length: 8,
+      basename: false
     });
     var target = this.target;
     var filerev = grunt.filerev || {summary: {}};
@@ -74,8 +75,13 @@ module.exports = function (grunt) {
            }
         }
 
-        filerev.summary[path.normalize(file)] = path.join(dirname, newName);
-        grunt.verbose.writeln(chalk.green('✔ ') + file + chalk.gray(' changed to ') + newName);
+        if (options.basename) {
+          filerev.summary[path.basename(file)] = newName;
+        } else {
+          filerev.summary[path.normalize(file)] = path.join(dirname, newName);
+        }
+        grunt.log.writeln(chalk.green('✔ ') + file + chalk.gray(' changed to ') + newName);
+
         if (sourceMap) {
             filerev.summary[path.normalize(file + '.map')] = path.join(dirname, newName + '.map');
             grunt.verbose.writeln(chalk.green('✔ ') + file + '.map' + chalk.gray(' changed to ') + newName + '.map');
