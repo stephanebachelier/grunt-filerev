@@ -57,6 +57,13 @@ module.exports = function (grunt) {
         cwd: 'test/fixtures',
         src: ['*.js'],
         dest: 'test/tmp/withSourceMaps'
+      },
+      withBasenameOption: {
+        options: {
+          basename: true
+        },
+        src: ['test/tmp/another.png'],
+        dest: 'test/tmp/relative'
       }
     },
     simplemocha: {
@@ -79,15 +86,32 @@ module.exports = function (grunt) {
     'jshint',
     'clean',
     'copy',
-    'filerev',
+    'filerev:compile',
+    'filerev:withConfig',
+    'filerev:withDest',
+    'filerev:withExpand',
+    'filerev:withSummaryAttributeName',
+    'filerev:withSourceMaps',
     'checkSummary',
+    'clearSummary',
+    'filerev:withBasenameOption',
+    'checkBasenameSummary',
     'simplemocha',
     'clean'
   ]);
+
+  grunt.registerTask('clearSummary', 'clear filerev summary', function () {
+    grunt.filerev.summary = {};
+  });
 
   grunt.registerTask('checkSummary', 'Check that summary attribute is correctly created', function () {
     var src = path.normalize('test/fixtures/file.png');
     var expected = path.normalize('test/tmp/file.26365248.png');
     assert.equal(grunt.filerev.summary[src], expected);
+  });
+
+  grunt.registerTask('checkBasenameSummary', 'Check that summary attribute is correctly created', function () {
+    assert.equal(Object.keys(grunt.filerev.summary)[0], 'another.png');
+    assert.equal(grunt.filerev.summary['another.png'], 'another.92279d3f.png');
   });
 };

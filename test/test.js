@@ -51,4 +51,3 @@ it('should revision .js file ok without any .map', function () {
   var revisioned = fs.statSync(hashes[file]).size;
   assert(revisioned === original);
 });
-
