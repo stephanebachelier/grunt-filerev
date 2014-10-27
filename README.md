@@ -99,6 +99,21 @@ The task will ensure that any source map for `.css` or `.js` file is revisioned 
 
 For example, `js/main.js` revisioned to `js/main.9d713a59.js` will also have `js/main.js.map` revisioned to the same hash `js/main.9d713a59.js.map`.
 
+#### basename
+
+Type: `boolean`  
+Default: `false`
+
+This option is useful when you are only interested about having a map of the transformation of the filename, which means the summary will only output the basename.
+
+For example you would have the following map, without taking into account which directories original and revved files would be.
+```
+{
+  'img1.png': 'img1.59bcc3ad.png',
+  'img2.png': 'img2.060b1aa6.png'
+}
+```
+
 ## License
 
 [BSD license](http://opensource.org/licenses/bsd-license.php) and copyright Google
