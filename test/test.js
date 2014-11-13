@@ -2,13 +2,7 @@
 var fs = require('fs');
 var assert = require('assert');
 
-var hashes = {
-  'test/fixtures/file.png' : 'test/tmp/file.26365248.png',
-  'test/fixtures/cfgfile.png' : 'test/tmp/cfgfile.da63.png',
-  'test/fixtures/math.js' : 'test/tmp/withSourceMaps/math.2f56179e.js',
-  'test/fixtures/math.js.map' : 'test/tmp/withSourceMaps/math.2f56179e.js.map',
-  'test/fixtures/physics.js' : 'test/tmp/withSourceMaps/physics.14a0a482.js'
-};
+var hashes = require('./hashes.json');
 
 it('should revision files based on content', function () {
   var file = 'test/fixtures/file.png';
@@ -51,4 +45,3 @@ it('should revision .js file ok without any .map', function () {
   var revisioned = fs.statSync(hashes[file]).size;
   assert(revisioned === original);
 });
-

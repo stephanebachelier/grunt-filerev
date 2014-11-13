@@ -86,8 +86,9 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('checkSummary', 'Check that summary attribute is correctly created', function () {
+    var hashes = grunt.file.readJSON('test/hashes.json');
     var src = path.normalize('test/fixtures/file.png');
-    var expected = path.normalize('test/tmp/file.26365248.png');
+    var expected = path.normalize(hashes['test/fixtures/file.png']);
     assert.equal(grunt.filerev.summary[src], expected);
   });
 };
